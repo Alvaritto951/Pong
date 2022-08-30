@@ -1,4 +1,5 @@
 from random import randint
+import re
 import pygame as pg
 
 
@@ -8,7 +9,7 @@ class Bola:
         self.center_y = center_y
         self.color = color
         self.radio = radio
-
+        
         self.vx = 0
         self.vy = 0
     
@@ -30,7 +31,19 @@ class Bola:
             self.vy *= -1
             #self.vx *= randint() #Cambiar dirección a la bola aleatoriamente
             #self.vy *= randint
-
+    
+    @property #Decorador que sirve para quitar los paréntesis del final. Métodos enmascarados como atributos.
+    def izquierda(self): #Sirve para ver si la bola y la raqueta coinciden en coordenadas (intersección). Son métodos.
+        return self.center_x - self.radio
+    @property
+    def derecha(self):
+        return self.center_x + self.radio
+    @property
+    def arriba(self):
+        return self.center_y - self.radio
+    @property
+    def abajo(self):
+        return self.center_y + self.radio
             
    
   
