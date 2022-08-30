@@ -1,3 +1,4 @@
+from random import randint
 import pygame as pg
 
 
@@ -14,6 +15,25 @@ class Bola:
     def dibujar(self, pantalla):
         pg.draw.circle(pantalla, self.color, (self.center_x, self.center_y), self.radio)
 
+    def mover(self, x_max = 800, y_max = 600): #Cambiar center_x & center_y (para que se mueva) y x_max e y_max (para definir los rebotes)
+        self.center_x += self.vx
+        self.center_y += self.vy
+        if self.center_y >= y_max - self.radio or self.center_y < self.radio: #Rebota en 0 y en 600
+            #self.center_y += self.vy * -1 --> Si se hace así, lo que hace la bola es seguir el borde de la pantalla, no rebota.
+            self.vy *= -1 #Cambiar dirección de la bola rebotando
+        
+        if self.center_x >= x_max or self.center_x < 0: #Si entra gol, sale desde el centro de la pantalla
+            self.center_x = x_max // 2
+            self.center_y = y_max // 2
+
+            self.vx *= -1 #Cambiar dirección a la bola, justo la contraria al marcar gol
+            self.vy *= -1
+            #self.vx *= randint() #Cambiar dirección a la bola aleatoriamente
+            #self.vy *= randint
+
+            
+   
+  
 class Raqueta:
     """
     x: posicion centro x
