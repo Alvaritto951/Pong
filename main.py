@@ -32,11 +32,13 @@ while not game_over:
     raqueta2.mover(pg.K_UP, pg.K_DOWN) #Aquí estaba lo que está indicado en la función "mover" en entidades
     raqueta1.mover(pg.K_w, pg.K_s)
     bola.mover()
- 
+    bola.comprobar_choque(raqueta1, raqueta2) #Se usa la función dentro de bola para ver si rebota en las raquetas (r1 & r2 en entidades)
+
     pantalla_principal.fill((0, 0, 0))
     bola.dibujar(pantalla_principal)
     raqueta1.dibujar(pantalla_principal)
     raqueta2.dibujar(pantalla_principal)
+
     #Le pasa la información a la tarjeta gráfica
     pg.display.flip()
 #Hasta aquí

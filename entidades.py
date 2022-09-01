@@ -44,6 +44,16 @@ class Bola:
     @property
     def abajo(self):
         return self.center_y + self.radio
+    
+    def comprobar_choque(self, *raquetas):  
+        #Rebote genérico de bola en raqueta
+        for raqueta_activa in raquetas:
+            if self.derecha >= raqueta_activa.izquierda and \
+                self.abajo >= raqueta_activa.arriba and \
+                self.arriba <= raqueta_activa.abajo and \
+                self.izquierda <= raqueta_activa.derecha:
+                    self.vx *= -1
+                    return
             
    
   
@@ -78,6 +88,21 @@ class Raqueta:
             self.center_y += self.vy
         if self.center_y > y_max - self.h // 2: #Movimiento de la raqueta hacia abajo
             self.center_y = y_max - self.h // 2
+    
+    @property #Decorador que sirve para quitar los paréntesis del final. Métodos enmascarados como atributos.
+    def izquierda(self): #Sirve para ver si la bola y la raqueta coinciden en coordenadas (intersección). Son métodos.
+        return self.center_x - self.w // 2
+    @property
+    def derecha(self):
+        return self.center_x + self.w // 2
+    @property
+    def arriba(self):
+        return self.center_y - self.h // 2
+    @property
+    def abajo(self):
+        return self.center_y + self.h // 2
+
+   
 
 
 
