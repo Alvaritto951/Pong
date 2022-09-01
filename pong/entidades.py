@@ -1,5 +1,5 @@
 from random import randint
-import re
+
 import pygame as pg
 
 
@@ -23,7 +23,7 @@ class Bola:
             #self.center_y += self.vy * -1 --> Si se hace así, lo que hace la bola es seguir el borde de la pantalla, no rebota.
             self.vy *= -1 #Cambiar dirección de la bola rebotando
         
-        if self.center_x >= x_max or self.center_x < 0: #Si entra gol, sale desde el centro de la pantalla
+        if self.center_x >= x_max: #Si entra gol, sale desde el centro de la pantalla
             self.center_x = x_max // 2
             self.center_y = y_max // 2
 
@@ -31,6 +31,18 @@ class Bola:
             self.vy *= -1
             #self.vx *= randint() #Cambiar dirección a la bola aleatoriamente
             #self.vy *= randint
+            
+            return "LEFT"
+        
+        if self.center_x < 0:
+            self.center_x = x_max // 2
+            self.center_y = y_max // 2
+
+            self.vx *= -1 #Cambiar dirección a la bola, justo la contraria al marcar gol
+            self.vy *= -1
+
+            return "RIGHT"
+
     
     @property #Decorador que sirve para quitar los paréntesis del final. Métodos enmascarados como atributos.
     def izquierda(self): #Sirve para ver si la bola y la raqueta coinciden en coordenadas (intersección). Son métodos.
@@ -102,8 +114,7 @@ class Raqueta:
     def abajo(self):
         return self.center_y + self.h // 2
 
-   
 
 
 
-    
+
