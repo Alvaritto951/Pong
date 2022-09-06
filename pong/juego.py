@@ -7,6 +7,8 @@ class Controlador:
         pantalla_principal = pg.display.set_mode((ANCHO, ALTO))
         cronometro = pg.time.Clock()
 
+        self.pantallas = [Menu(pantalla_principal, cronometro), Partida(pantalla_principal, cronometro)]
+
         self.menu = Menu(pantalla_principal, cronometro) #Instancia la clase Menú --- En la variable menú, tengo el objeto Menu
         self.partida = Partida(pantalla_principal, cronometro) #Instancia la clase Partida
         #records = Records() #Arrastra la clase Records
