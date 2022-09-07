@@ -11,10 +11,16 @@ class Partida:
         self.temporizador = TIEMPO_MAXIMO_PARTIDA #Viene del __init__ #180000 milisegundos = 18 segundos. Son los segundos que dura el juego
 
         self.bola = Bola(ANCHO // 2, ALTO // 2, color=BLANCO)
-        self.raqueta1 = Raqueta(20, ALTO // 2, w=20, h=120, color=BLANCO)
+
+        #self.raqueta1 = Raqueta(20, ALTO // 2, w=20, h=120, color=BLANCO) --- esto es con el rectángulo blanco
+        self.raqueta1 = Raqueta(20, ALTO // 2, w=30, h=114) #Esto es con la imagen electric00_
         self.raqueta1.vy = 5
-        self.raqueta2 = Raqueta(ANCHO - 20, ALTO // 2, w=20, h=120, color=BLANCO)
+        self.raqueta1.imagen = 'dcha'
+
+        #self.raqueta2 = Raqueta(ANCHO - 20, ALTO // 2, w=20, h=120, color=BLANCO) --- esto es con el rectángulo blanco
+        self.raqueta2 = Raqueta(ANCHO - 20, ALTO // 2, w=30, h=114) #Esto es con la imagen electric00
         self.raqueta2.vy = 5
+        self.raqueta2.imagen ='izq'
 
         self.puntuacion1 = 0
         self.puntuacion2 = 0
@@ -106,7 +112,7 @@ class Partida:
             
 
             #Le pasa la información a la tarjeta gráfica
-            pg.display.flip()
+            pg.display.flip()  
         #Hasta aquí
 
 class Menu:
@@ -116,11 +122,11 @@ class Menu:
         pg.display.set_caption("Menú")
         self.imagenFondo = pg.image.load("pong/images/swpong.jpg")
         self.fuenteInicio = pg.font.Font("pong/fonts/staatliches.ttf", 50)
-        self.musica = pg.mixer.Sound("pong/songs/DOF.ogg") 
+         
     
     def bucle_ppal(self):
         game_over = False
-        self.musica.play(-1) #Música en bucle indefinidamente
+        
 
         while not game_over:
             for evento in pg.event.get():
@@ -136,4 +142,4 @@ class Menu:
             self.pantalla_principal.blit(menu, (ANCHO // 5, 20))
             pg.display.flip()
 
-        #self.musica.stop() #Esto es para que solo suene en la pantalla menu
+        

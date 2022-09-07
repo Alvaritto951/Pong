@@ -77,6 +77,12 @@ class Raqueta:
     h: altura de la raqueta
     color: tupla RGB de color
     """
+    
+    imagenes = {
+        "izq": "electric00.png",
+        "dcha": "electric00_.png"
+    } #Diccionario de imágenes
+
     def __init__(self, center_x, center_y, w=120, h=20, color=(255, 255, 0)):
         self.center_x = center_x
         self.center_y = center_y
@@ -86,9 +92,20 @@ class Raqueta:
 
         self.vx = 0
         self.vy = 0
+
+        self._imagen = pg.image.load(f"pong/images/{self.imagenes['izq']}") #convert.alpha() --- pixels transparentes
+
+    @property #Recupera algo --- Getter --- Propiedad de Lectura
+    def imagen(self): 
+        return self._imagen
+
+    @imagen.setter #Graba algo --- Setter --- Propiedad de Escritura
+    def imagen(self, valor):
+        self._imagen = pg.image.load(f"pong/images/{self.imagenes[valor]}") #Sirve para poder escribir la dcha o la izqda
     
     def dibujar(self, pantalla):
-        pg.draw.rect(pantalla, self.color, (self.center_x - self.w // 2, self.center_y - self.h // 2, self.w, self.h))
+        pantalla.blit(self._imagen, (self.center_x - self.w // 2, self.center_y - self.h // 2))
+        #pg.draw.rect(pantalla, self.color, (self.center_x - self.w // 2, self.center_y - self.h // 2, self.w, self.h)) --- Este es el rectángulo blanco
     
     def mover(self, tecla_arriba, tecla_abajo, y_max=600): #Son parámetros que luego se indican en main con la tecla que quieres pulsar y ver el máximo de pantalla (ymax)
         estado_teclas = pg.key.get_pressed() #Devuelve lista de 512 teclas -> Función que indica estado del teclado -> De cada tecla devuelve False si no tocas nada
