@@ -78,9 +78,9 @@ class Raqueta:
     color: tupla RGB de color
     """
     
-    imagenes = {
-        "izq": "electric00.png",
-        "dcha": "electric00_.png"
+    file_imagenes = {
+        "izq": ["electric00.png", "electric01.png", "electric02.png"],
+        "dcha": ["electric00_.png", "electric01_.png", "electric02_.png"]
     } #Diccionario de imágenes
 
     def __init__(self, center_x, center_y, w=120, h=20, color=(255, 255, 0)):
@@ -93,8 +93,24 @@ class Raqueta:
         self.vx = 0
         self.vy = 0
 
-        self._imagen = pg.image.load(f"pong/images/{self.imagenes['izq']}") #convert.alpha() --- pixels transparentes
+        self.imagenes = self.__cargar_imagenes()
+        self.direccion = 'izq'
+        self.imagen_activa = 0
+        self.cambio_cada_x_fotogramas = 5 #Cada X fotogramas, la imagen va a rotar para que no vaya a velocidad indefinida
+        self.cuenta_fotogramas = 0
 
+        #self._imagen = pg.image.load(f"pong/images/{self.imagenes['izq']}") #para una sola imagen --- #convert.alpha() --- pixels transparentes
+
+    def __cargar_imagenes(self):
+        calcomanias = {}
+        for lado in self.file_imagenes: #Te busca dentro de claves
+            calcomanias[lado] = []
+            for img in self.file_imagenes[lado]: #Te busca dentro de valor
+                nueva_surface = pg.image.load(f"pong/images/{img}")
+                calcomanias[lado].append(nueva_surface) #Añadimos la imagen al diccionario
+
+        return calcomanias        
+    """
     @property #Recupera algo --- Getter --- Propiedad de Lectura
     def imagen(self): 
         return self._imagen
@@ -102,9 +118,17 @@ class Raqueta:
     @imagen.setter #Graba algo --- Setter --- Propiedad de Escritura
     def imagen(self, valor):
         self._imagen = pg.image.load(f"pong/images/{self.imagenes[valor]}") #Sirve para poder escribir la dcha o la izqda
-    
+    """
+
     def dibujar(self, pantalla):
-        pantalla.blit(self._imagen, (self.center_x - self.w // 2, self.center_y - self.h // 2))
+        pantalla.blit(self.imagenes[self.direccion][self.imagen_activa], (self.center_x - self.w // 2, self.center_y - self.h // 2))
+        self.cuenta_fotogramas += 1 #Cuenta fotogramas
+        if self.cuenta_fotogramas == self.cambio_cada_x_fotogramas: #Si el tiempo que pasa es igual a los fotogramas indicados
+            self.imagen_activa += 1 #Añade 1, es decir, cambia a la siguiente imagen
+            if self.imagen_activa >= len(self.imagenes[self.direccion]): #Si las imágenes superan la longitud del total de la lista,
+                self.imagen_activa = 0  #Se le añade una imagen cada vez, pero hay que ponerle tope indicando que si es mayor o igual a la longitud de la cadena, me lo vuelva a poner en la posición inicial (0)
+            self.cuenta_fotogramas = 0  #Pone el contador de fotogramas a 0
+        #pantalla.blit(self._imagen, (self.center_x - self.w // 2, self.center_y - self.h // 2)) #Utilizando una sola imagen
         #pg.draw.rect(pantalla, self.color, (self.center_x - self.w // 2, self.center_y - self.h // 2, self.w, self.h)) --- Este es el rectángulo blanco
     
     def mover(self, tecla_arriba, tecla_abajo, y_max=600): #Son parámetros que luego se indican en main con la tecla que quieres pulsar y ver el máximo de pantalla (ymax)

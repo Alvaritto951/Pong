@@ -15,12 +15,12 @@ class Partida:
         #self.raqueta1 = Raqueta(20, ALTO // 2, w=20, h=120, color=BLANCO) --- esto es con el rectángulo blanco
         self.raqueta1 = Raqueta(20, ALTO // 2, w=30, h=114) #Esto es con la imagen electric00_
         self.raqueta1.vy = 5
-        self.raqueta1.imagen = 'dcha'
+        self.raqueta1.direccion = 'dcha'
 
         #self.raqueta2 = Raqueta(ANCHO - 20, ALTO // 2, w=20, h=120, color=BLANCO) --- esto es con el rectángulo blanco
         self.raqueta2 = Raqueta(ANCHO - 20, ALTO // 2, w=30, h=114) #Esto es con la imagen electric00
         self.raqueta2.vy = 5
-        self.raqueta2.imagen ='izq'
+        #self.raqueta2.direccion = 'izq'  --- Lo coge automáticamente
 
         self.puntuacion1 = 0
         self.puntuacion2 = 0
